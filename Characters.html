@@ -113,7 +113,7 @@
       import { logPageView } from "./firebase-config.js";
       logPageView("Characters page");
     </script>
-    <script src="assets/js/json.js"></script>
+    <script src="assets/css/js/json.js"></script>
     <img src="assets/img/Characters/" alt="" />
     <script>
       // Function to get URL parameter
@@ -159,18 +159,19 @@
               grid.appendChild(subItemElement);
             });
           } else {
-            grid.innerHTML = "<p>No sub-items found for this weapon.</p>";
+            grid.innerHTML = "<p style='color: white; text-align: center; padding: 20px;'>No sub-items found for this weapon.</p>";
           }
-        } else if (typeFilter && typeFilter.toLowerCase() === "characters") {
+        } else if (typeFilter && (typeFilter.toLowerCase() === "characters" || typeFilter.toLowerCase() === "character")) {
           headerTitle.textContent = "Characters";
-          data.characters.forEach((character) => {
-            const charElement = document.createElement("a");
-            charElement.href = `item.html?id=${
-              character.id
-            }&name=${encodeURIComponent(character.name)}&type=character`;
-            charElement.className = "box";
+          if (data.characters && data.characters.length > 0) {
+            data.characters.forEach((character) => {
+              const charElement = document.createElement("a");
+              charElement.href = `item.html?id=${
+                character.id
+              }&name=${encodeURIComponent(character.name)}&type=character`;
+              charElement.className = "box";
 
-            charElement.innerHTML = `
+              charElement.innerHTML = `
                         <div class="box-img">
                             <img src="${character.url}" class="bimg" alt="${character.name}">
                         </div>
@@ -178,18 +179,22 @@
                         <div class="char-name">${character.name}</div>
                     `;
 
-            grid.appendChild(charElement);
-          });
+              grid.appendChild(charElement);
+            });
+          } else {
+            grid.innerHTML = "<p style='color: white; text-align: center; padding: 20px;'>No characters found.</p>";
+          }
         } else if (typeFilter && typeFilter.toLowerCase() === "pets") {
           headerTitle.textContent = "Pets";
-          data.pets.forEach((pet) => {
-            const petElement = document.createElement("a");
-            petElement.href = `item.html?id=${pet.id}&name=${encodeURIComponent(
-              pet.name
-            )}&type=pet`;
-            petElement.className = "box";
+          if (data.pets && data.pets.length > 0) {
+            data.pets.forEach((pet) => {
+              const petElement = document.createElement("a");
+              petElement.href = `item.html?id=${pet.id}&name=${encodeURIComponent(
+                pet.name
+              )}&type=pet`;
+              petElement.className = "box";
 
-            petElement.innerHTML = `
+              petElement.innerHTML = `
                         <div class="box-img">
                             <img src="${pet.url}" class="bimg" alt="${pet.name}">
                         </div>
@@ -197,18 +202,22 @@
                         <div class="char-name">${pet.name}</div>
                     `;
 
-            grid.appendChild(petElement);
-          });
+              grid.appendChild(petElement);
+            });
+          } else {
+            grid.innerHTML = "<p style='color: white; text-align: center; padding: 20px;'>No pets found.</p>";
+          }
         } else if (typeFilter && typeFilter.toLowerCase() === "emotes") {
           headerTitle.textContent = "Emotes";
-          data.emotes.forEach((emote) => {
-            const emoteElement = document.createElement("a");
-            emoteElement.href = `item.html?id=${
-              emote.id
-            }&name=${encodeURIComponent(emote.name)}&type=emote`;
-            emoteElement.className = "box";
+          if (data.emotes && data.emotes.length > 0) {
+            data.emotes.forEach((emote) => {
+              const emoteElement = document.createElement("a");
+              emoteElement.href = `item.html?id=${
+                emote.id
+              }&name=${encodeURIComponent(emote.name)}&type=emote`;
+              emoteElement.className = "box";
 
-            emoteElement.innerHTML = `
+              emoteElement.innerHTML = `
                         <div class="box-img">
                             <img src="${emote.url}" class="bimg" alt="${emote.name}">
                         </div>
@@ -216,10 +225,13 @@
                         <div class="char-name">${emote.name}</div>
                     `;
 
-            grid.appendChild(emoteElement);
-          });
+              grid.appendChild(emoteElement);
+            });
+          } else {
+            grid.innerHTML = "<p style='color: white; text-align: center; padding: 20px;'>No emotes found.</p>";
+          }
         } else {
-          grid.innerHTML = "<p>No items found.</p>";
+          grid.innerHTML = "<p style='color: white; text-align: center; padding: 20px;'>No items found. Please check the URL parameters.</p>";
         }
       }
 
